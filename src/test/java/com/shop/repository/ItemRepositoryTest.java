@@ -194,5 +194,4 @@ class ItemRepositoryTest {
             System.out.println(resultItem.toString());
         }
     }
-
 }
