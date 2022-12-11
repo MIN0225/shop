@@ -12,6 +12,7 @@ import com.shop.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +33,16 @@ public class SecurityConfig{
                 .logoutRequestMatcher(new AntPathRequestMatcher
                         ("/members/logout"))
                 .logoutSuccessUrl("/");
+
+        http.authorizeRequests()
+                .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+
         return http.build();
     }
 
@@ -46,4 +57,7 @@ public class SecurityConfig{
 //        auth.userDetailsService(memberService)
 //                .passwordEncoder(passwordEncoder());
 //    }
+
+
+
 }
