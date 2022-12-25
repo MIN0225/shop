@@ -37,4 +37,8 @@ public class CartItem extends BaseEntity{
         this.count += count;
     }
 
+    public void updateCount(int count){
+        this.count = count;
+    }
+
 }
